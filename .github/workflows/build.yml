@@ -1,4 +1,4 @@
-name: "nabu v11 KSU+SUSFS"
+name: "nabu v12 KSU+SUSFS"
 
 on:
   workflow_dispatch:
@@ -28,33 +28,28 @@ jobs:
           echo 'IyEvdXNyL2Jpbi9lbnYgcHl0aG9uMwojIC0qLSBjb2Rpbmc6IHV0Zi04IC0qLQoiIiJuYWJ1IDQuMTQgKyB0aWFubiBLZXJuZWxTVSB2MS4wLjUgbm9uLUdLSSBtYW51YWwgaG9va3MuCgpQYXR0ZXJuIGZvbGxvd3MgZWJlYXJzL09uZVBsdXMtU004MTUwLUtlcm5lbC1CdWlsZHMgMDAwX3N5c2NhbGxfaG9va3MucGF0Y2gKKHByb3ZlbiBvbiBTTTgxNTAgLyBrZXJuZWwgNC4xNCkuCgpIb29rcyBpbnNlcnRlZCAoTFNNIGFscmVhZHkgY292ZXJzIHByY3RsL3JlbmFtZS9zZXR1aWQsIHNvIG5vdCBoZXJlKToKICBmcy9leGVjLmMgICAgICAgICAgICAgIGRvX2V4ZWN2ZSAvIGNvbXBhdF9kb19leGVjdmUKICBmcy9vcGVuLmMgICAgICAgICAgICAgIFNZU0NBTExfREVGSU5FMyhmYWNjZXNzYXQpCiAgZnMvcmVhZF93cml0ZS5jICAgICAgICBTWVNDQUxMX0RFRklORTMocmVhZCkKICBmcy9zdGF0LmMgICAgICAgICAgICAgIHZmc19zdGF0eAogIGRyaXZlcnMvaW5wdXQvaW5wdXQuYyAgaW5wdXRfaGFuZGxlX2V2ZW50CiAgZHJpdmVycy90dHkvcHR5LmMgICAgICBwdHNfdW5peDk4X2xvb2t1cApJZGVtcG90ZW50LgoiIiIKaW1wb3J0IG9zCmltcG9ydCBzeXMKCkZBSUwgPSAwCgoKZGVmIHN1YihwYXRoLCBmaW5kLCByZXBsLCBtYXJrZXIsIGxhYmVsKToKICAgIGdsb2JhbCBGQUlMCiAgICBpZiBub3Qgb3MucGF0aC5pc2ZpbGUocGF0aCk6CiAgICAgICAgcHJpbnQoIltNSVNTIEZJTEVdICVzICglcykiICUgKHBhdGgsIGxhYmVsKSkKICAgICAgICBGQUlMICs9IDEKICAgICAgICByZXR1cm4KICAgIHdpdGggb3BlbihwYXRoLCBlbmNvZGluZz0idXRmLTgiLCBlcnJvcnM9InN1cnJvZ2F0ZWVzY2FwZSIpIGFzIGZoOgogICAgICAgIHMgPSBmaC5yZWFkKCkKICAgIGlmIG1hcmtlciBpbiBzOgogICAgICAgIHByaW50KCJbU0tJUF0gJXMgKCVzKSIgJSAocGF0aCwgbGFiZWwpKQogICAgICAgIHJldHVybgogICAgaWYgZmluZCBub3QgaW4gczoKICAgICAgICBwcmludCgiW01JU1MgQU5DSE9SXSAlcyAoJXMpIiAlIChwYXRoLCBsYWJlbCkpCiAgICAgICAgRkFJTCArPSAxCiAgICAgICAgcmV0dXJuCiAgICBpZiBzLmNvdW50KGZpbmQpID4gMToKICAgICAgICBwcmludCgiW1dBUk5dICVzIGFuY2hvciB4JWQsIHBhdGNoIGZpcnN0IiAlIChwYXRoLCBzLmNvdW50KGZpbmQpKSkKICAgIHMgPSBzLnJlcGxhY2UoZmluZCwgcmVwbCwgMSkKICAgIHdpdGggb3BlbihwYXRoLCAidyIsIGVuY29kaW5nPSJ1dGYtOCIsIGVycm9ycz0ic3Vycm9nYXRlZXNjYXBlIikgYXMgZmg6CiAgICAgICAgZmgud3JpdGUocykKICAgIHByaW50KCJbT0tdICVzICglcykiICUgKHBhdGgsIGxhYmVsKSkKCgpHID0gIiNpZmRlZiBDT05GSUdfS1NVIgoKIyAtLS0tLS0tLS0tLS0tLS0tIGZzL2V4ZWMuYyAtLS0tLS0tLS0tLS0tLS0tCnN1YigiZnMvZXhlYy5jIiwKICAgICIiImludCBkb19leGVjdmUoc3RydWN0IGZpbGVuYW1lICpmaWxlbmFtZSwKCWNvbnN0IGNoYXIgX191c2VyICpjb25zdCBfX3VzZXIgKl9fYXJndiwKCWNvbnN0IGNoYXIgX191c2VyICpjb25zdCBfX3VzZXIgKl9fZW52cCkKewoJc3RydWN0IHVzZXJfYXJnX3B0ciBhcmd2ID0geyAucHRyLm5hdGl2ZSA9IF9fYXJndiB9OwoJc3RydWN0IHVzZXJfYXJnX3B0ciBlbnZwID0geyAucHRyLm5hdGl2ZSA9IF9fZW52cCB9OwoJcmV0dXJuIGRvX2V4ZWN2ZWF0X2NvbW1vbihBVF9GRENXRCwgZmlsZW5hbWUsIGFyZ3YsIGVudnAsIDApOwp9IiIiLAogICAgIiIiI2lmZGVmIENPTkZJR19LU1UKZXh0ZXJuIGJvb2wga3N1X2V4ZWN2ZWF0X2hvb2sgX19yZWFkX21vc3RseTsKZXh0ZXJuIGludCBrc3VfaGFuZGxlX2V4ZWN2ZWF0KGludCAqZmQsIHN0cnVjdCBmaWxlbmFtZSAqKmZpbGVuYW1lX3B0ciwKCQkJICAgICAgIHZvaWQgKmFyZ3YsIHZvaWQgKmVudnAsIGludCAqZmxhZ3MpOwpleHRlcm4gaW50IGtzdV9oYW5kbGVfZXhlY3ZlYXRfc3Vjb21wYXQoaW50ICpmZCwKCQkJCQlzdHJ1Y3QgZmlsZW5hbWUgKipmaWxlbmFtZV9wdHIsCgkJCQkJdm9pZCAqYXJndiwgdm9pZCAqZW52cCwKCQkJCQlpbnQgKmZsYWdzKTsKI2VuZGlmCgppbnQgZG9fZXhlY3ZlKHN0cnVjdCBmaWxlbmFtZSAqZmlsZW5hbWUsCgljb25zdCBjaGFyIF9fdXNlciAqY29uc3QgX191c2VyICpfX2FyZ3YsCgljb25zdCBjaGFyIF9fdXNlciAqY29uc3QgX191c2VyICpfX2VudnApCnsKCXN0cnVjdCB1c2VyX2FyZ19wdHIgYXJndiA9IHsgLnB0ci5uYXRpdmUgPSBfX2FyZ3YgfTsKCXN0cnVjdCB1c2VyX2FyZ19wdHIgZW52cCA9IHsgLnB0ci5uYXRpdmUgPSBfX2VudnAgfTsKI2lmZGVmIENPTkZJR19LU1UKCWlmICh1bmxpa2VseShrc3VfZXhlY3ZlYXRfaG9vaykpCgkJa3N1X2hhbmRsZV9leGVjdmVhdCgoaW50ICopQVRfRkRDV0QsICZmaWxlbmFtZSwgJmFyZ3YsICZlbnZwLCAwKTsKCWVsc2UKCQlrc3VfaGFuZGxlX2V4ZWN2ZWF0X3N1Y29tcGF0KChpbnQgKilBVF9GRENXRCwgJmZpbGVuYW1lLCBOVUxMLAoJCQkJCSAgICAgTlVMTCwgTlVMTCk7CiNlbmRpZgoJcmV0dXJuIGRvX2V4ZWN2ZWF0X2NvbW1vbihBVF9GRENXRCwgZmlsZW5hbWUsIGFyZ3YsIGVudnAsIDApOwp9IiIiLAogICAgImtzdV9oYW5kbGVfZXhlY3ZlYXRfc3Vjb21wYXQoKGludCAqKUFUX0ZEQ1dELCAmZmlsZW5hbWUsIE5VTEwsIiwKICAgICJleGVjLmMgZG9fZXhlY3ZlIikKCiMgLS0tLS0tLS0tLS0tLS0tLSBmcy9vcGVuLmMgLS0tLS0tLS0tLS0tLS0tLQpzdWIoImZzL29wZW4uYyIsCiAgICAiIiJTWVNDQUxMX0RFRklORTMoZmFjY2Vzc2F0LCBpbnQsIGRmZCwgY29uc3QgY2hhciBfX3VzZXIgKiwgZmlsZW5hbWUsIGludCwgbW9kZSkKewoJY29uc3Qgc3RydWN0IGNyZWQgKm9sZF9jcmVkOyIiIiwKICAgICIiIiNpZmRlZiBDT05GSUdfS1NVCmV4dGVybiBpbnQga3N1X2hhbmRsZV9mYWNjZXNzYXQoaW50ICpkZmQsIGNvbnN0IGNoYXIgX191c2VyICoqZmlsZW5hbWVfdXNlciwKCQkJCWludCAqbW9kZSwgaW50ICpfX3VudXNlZF9mbGFncyk7CiNlbmRpZgoKU1lTQ0FMTF9ERUZJTkUzKGZhY2Nlc3NhdCwgaW50LCBkZmQsIGNvbnN0IGNoYXIgX191c2VyICosIGZpbGVuYW1lLCBpbnQsIG1vZGUpCnsKI2lmZGVmIENPTkZJR19LU1UKCWtzdV9oYW5kbGVfZmFjY2Vzc2F0KCZkZmQsICZmaWxlbmFtZSwgJm1vZGUsIE5VTEwpOwojZW5kaWYKCWNvbnN0IHN0cnVjdCBjcmVkICpvbGRfY3JlZDsiIiIsCiAgICAia3N1X2hhbmRsZV9mYWNjZXNzYXQoJmRmZCwgJmZpbGVuYW1lLCAmbW9kZSwgTlVMTCkiLAogICAgIm9wZW4uYyBmYWNjZXNzYXQiKQoKIyAtLS0tLS0tLS0tLS0tLS0tIGZzL3JlYWRfd3JpdGUuYyAtLS0tLS0tLS0tLS0tLS0tCnN1YigiZnMvcmVhZF93cml0ZS5jIiwKICAgICIiIlNZU0NBTExfREVGSU5FMyhyZWFkLCB1bnNpZ25lZCBpbnQsIGZkLCBjaGFyIF9fdXNlciAqLCBidWYsIHNpemVfdCwgY291bnQpCnsKCXN0cnVjdCBmZCBmID0gZmRnZXRfcG9zKGZkKTsiIiIsCiAgICAiIiIjaWZkZWYgQ09ORklHX0tTVQpleHRlcm4gYm9vbCBrc3VfdmZzX3JlYWRfaG9vayBfX3JlYWRfbW9zdGx5OwpleHRlcm4gaW50IGtzdV9oYW5kbGVfc3lzX3JlYWQodW5zaWduZWQgaW50IGZkLCBjaGFyIF9fdXNlciAqKmJ1Zl9wdHIsCgkJCSAgICAgICBzaXplX3QgKmNvdW50X3B0cik7CiNlbmRpZgoKU1lTQ0FMTF9ERUZJTkUzKHJlYWQsIHVuc2lnbmVkIGludCwgZmQsIGNoYXIgX191c2VyICosIGJ1Ziwgc2l6ZV90LCBjb3VudCkKewojaWZkZWYgQ09ORklHX0tTVQoJaWYgKHVubGlrZWx5KGtzdV92ZnNfcmVhZF9ob29rKSkKCQlrc3VfaGFuZGxlX3N5c19yZWFkKGZkLCAmYnVmLCAmY291bnQpOwojZW5kaWYKCXN0cnVjdCBmZCBmID0gZmRnZXRfcG9zKGZkKTsiIiIsCiAgICAia3N1X2hhbmRsZV9zeXNfcmVhZChmZCwgJmJ1ZiwgJmNvdW50KSIsCiAgICAicmVhZF93cml0ZS5jIHJlYWQiKQoKIyAtLS0tLS0tLS0tLS0tLS0tIGZzL3N0YXQuYyAtLS0tLS0tLS0tLS0tLS0tCnN1YigiZnMvc3RhdC5jIiwKICAgICJpbnQgdmZzX3N0YXR4KGludCBkZmQsIGNvbnN0IGNoYXIgX191c2VyICpmaWxlbmFtZSwgaW50IGZsYWdzLCIsCiAgICAiIiIjaWZkZWYgQ09ORklHX0tTVQpleHRlcm4gaW50IGtzdV9oYW5kbGVfc3RhdChpbnQgKmRmZCwgY29uc3QgY2hhciBfX3VzZXIgKipmaWxlbmFtZV91c2VyLAoJCQkgICBpbnQgKmZsYWdzKTsKI2VuZGlmCgppbnQgdmZzX3N0YXR4KGludCBkZmQsIGNvbnN0IGNoYXIgX191c2VyICpmaWxlbmFtZSwgaW50IGZsYWdzLCIiIiwKICAgICJleHRlcm4gaW50IGtzdV9oYW5kbGVfc3RhdCIsCiAgICAic3RhdC5jIGRlY2wiKQoKc3ViKCJmcy9zdGF0LmMiLAogICAgIiIiCXN0cnVjdCBwYXRoIHBhdGg7CglpbnQgZXJyb3IgPSAtRUlOVkFMOwoJdW5zaWduZWQgaW50IGxvb2t1cF9mbGFncyA9IExPT0tVUF9GT0xMT1cgfCBMT09LVVBfQVVUT01PVU5UOwoiIiIsCiAgICAiIiIJc3RydWN0IHBhdGggcGF0aDsKCWludCBlcnJvciA9IC1FSU5WQUw7Cgl1bnNpZ25lZCBpbnQgbG9va3VwX2ZsYWdzID0gTE9PS1VQX0ZPTExPVyB8IExPT0tVUF9BVVRPTU9VTlQ7CgojaWZkZWYgQ09ORklHX0tTVQoJa3N1X2hhbmRsZV9zdGF0KCZkZmQsICZmaWxlbmFtZSwgJmZsYWdzKTsKI2VuZGlmCiIiIiwKICAgICJrc3VfaGFuZGxlX3N0YXQoJmRmZCwgJmZpbGVuYW1lLCAmZmxhZ3MpIiwKICAgICJzdGF0LmMgY2FsbCIpCgojIC0tLS0tLS0tLS0tLS0tLS0gZHJpdmVycy9pbnB1dC9pbnB1dC5jIC0tLS0tLS0tLS0tLS0tLS0Kc3ViKCJkcml2ZXJzL2lucHV0L2lucHV0LmMiLAogICAgIiIic3RhdGljIHZvaWQgaW5wdXRfaGFuZGxlX2V2ZW50KHN0cnVjdCBpbnB1dF9kZXYgKmRldiwKCQkJICAgICAgIHVuc2lnbmVkIGludCB0eXBlLCB1bnNpZ25lZCBpbnQgY29kZSwgaW50IHZhbHVlKQp7CiIiIiwKICAgICIiIiNpZmRlZiBDT05GSUdfS1NVCmV4dGVybiBpbnQga3N1X2hhbmRsZV9pbnB1dF9oYW5kbGVfZXZlbnQodW5zaWduZWQgaW50ICp0eXBlLAoJCQkJCSB1bnNpZ25lZCBpbnQgKmNvZGUsIGludCAqdmFsdWUpOwojZW5kaWYKCnN0YXRpYyB2b2lkIGlucHV0X2hhbmRsZV9ldmVudChzdHJ1Y3QgaW5wdXRfZGV2ICpkZXYsCgkJCSAgICAgICB1bnNpZ25lZCBpbnQgdHlwZSwgdW5zaWduZWQgaW50IGNvZGUsIGludCB2YWx1ZSkKewojaWZkZWYgQ09ORklHX0tTVQoJa3N1X2hhbmRsZV9pbnB1dF9oYW5kbGVfZXZlbnQoJnR5cGUsICZjb2RlLCAmdmFsdWUpOwojZW5kaWYKIiIiLAogICAgImtzdV9oYW5kbGVfaW5wdXRfaGFuZGxlX2V2ZW50KCZ0eXBlLCAmY29kZSwgJnZhbHVlKSIsCiAgICAiaW5wdXQuYyIpCgojIC0tLS0tLS0tLS0tLS0tLS0gZHJpdmVycy90dHkvcHR5LmMgLS0tLS0tLS0tLS0tLS0tLQpzdWIoImRyaXZlcnMvdHR5L3B0eS5jIiwKICAgICIiIglzdHJ1Y3QgdHR5X3N0cnVjdCAqdHR5OwoKCW11dGV4X2xvY2soJmRldnB0c19tdXRleCk7Cgl0dHkgPSBkZXZwdHNfZ2V0X3ByaXYoZmlsZS0+Zl9wYXRoLmRlbnRyeSk7IiIiLAogICAgIiIiCXN0cnVjdCB0dHlfc3RydWN0ICp0dHk7CgojaWZkZWYgQ09ORklHX0tTVQoJewoJCWV4dGVybiBpbnQga3N1X2hhbmRsZV9kZXZwdHMoc3RydWN0IGlub2RlICopOwoJCWtzdV9oYW5kbGVfZGV2cHRzKChzdHJ1Y3QgaW5vZGUgKilmaWxlLT5mX3BhdGguZGVudHJ5LT5kX2lub2RlKTsKCX0KI2VuZGlmCgltdXRleF9sb2NrKCZkZXZwdHNfbXV0ZXgpOwoJdHR5ID0gZGV2cHRzX2dldF9wcml2KGZpbGUtPmZfcGF0aC5kZW50cnkpOyIiIiwKICAgICJrc3VfaGFuZGxlX2RldnB0cygoc3RydWN0IGlub2RlICopZmlsZS0+Zl9wYXRoLmRlbnRyeS0+ZF9pbm9kZSkiLAogICAgInB0eS5jIGRldnB0cyIpCgpwcmludCgiLS0tLSBob29rIEZBSUwgPSAlZCAtLS0tIiAlIEZBSUwpCnN5cy5leGl0KDMgaWYgRkFJTCBlbHNlIDApCg==' | base64 -d > hooks_v2.py
           echo 'IyBBbnlLZXJuZWwzIFJhbWRpc2sgTW9kIFNjcmlwdApwcm9wZXJ0aWVzKCkgeyAnCmtlcm5lbC5zdHJpbmc9bmFidSBLU1UgKyBTVVNGUwpkZXZpY2UubmFtZTE9bmFidQpkby5kZXZpY2VjaGVjaz0xCmRvLm1vZHVsZXM9MApkby5zeXN0ZW1sZXNzPTEKZG8uY2xlYW51cD0xCmRvLmNsZWFudXBvbmFib3J0PTAKJzsgfQpibG9jaz1ib290Owppc19zbG90X2RldmljZT0xOwpyYW1kaXNrX2NvbXByZXNzaW9uPWF1dG87Ci4gdG9vbHMvYWszLWNvcmUuc2g7CnNldF9wZXJtX3JlY3Vyc2l2ZSAwIDAgNzU1IDY0NCAkcmFtZGlzay8qOwpzZXRfcGVybV9yZWN1cnNpdmUgMCAwIDc1MCA3NTAgJHJhbWRpc2svaW5pdCogJHJhbWRpc2svc2JpbjsKZHVtcF9ib290OwppZiBbIC1kICRyYW1kaXNrL292ZXJsYXkgXTsgdGhlbgoJcm0gLXJmICRyYW1kaXNrL292ZXJsYXk7CmZpOwp3cml0ZV9ib290Ow==' | base64 -d > anykernel.sh
           python3 -c "import ast;ast.parse(open('apply_patch.py').read());ast.parse(open('fix_hunks.py').read());ast.parse(open('hooks_v2.py').read());print('scripts ok')"
-          ls -l apply_patch.py fix_hunks.py hooks_v2.py anykernel.sh
 
-      - name: "4. get KSU v1.0.5"
+      - name: "4. KSU v1.0.5"
         run: |
           curl -fsSL -o ksu.zip https://github.com/tiann/KernelSU/archive/refs/tags/v1.0.5.zip
-          ls -lh ksu.zip
           unzip -q ksu.zip
-          test -d KernelSU-1.0.5 || { echo "unzip failed"; ls; exit 1; }
+          test -d KernelSU-1.0.5 || { echo "unzip failed"; exit 1; }
           mv KernelSU-1.0.5 ksu-src
-          ls ksu-src/kernel | head -5
 
       - name: "5. kernel source"
         run: |
           git clone --depth=1 -b HyperOS1 https://github.com/Kuugo2002/xiaomi_kernel_nabu.git kernel-source
-          test -d kernel-source/fs || exit 1
 
-      - name: "6. susfs patch into KSU"
+      - name: "6. susfs into KSU"
         run: |
           git clone --depth=1 -b kernel-4.14 https://github.com/ShirkNeko/susfs4ksu.git sfk
           cp sfk/kernel_patches/KernelSU/10_enable_susfs_for_ksu.patch ksu-src/
           cd ksu-src
           python3 ../apply_patch.py 10_enable_susfs_for_ksu.patch .
-          echo "=== SUSFS in KSU ==="
           grep -c CONFIG_KSU_SUSFS kernel/core_hook.c
           grep -c KSU_SUSFS kernel/Kconfig
 
-      - name: "7. install into kernel tree"
+      - name: "7. install into kernel"
         run: |
           rm -rf kernel-source/drivers/kernelsu
           cp -r ksu-src/kernel kernel-source/drivers/kernelsu
@@ -72,9 +67,7 @@ jobs:
           cp sfk/kernel_patches/include/linux/sus_su.h kernel-source/include/linux/
           cd kernel-source
           python3 ../apply_patch.py ../50_add.patch . || true
-          echo "=== fix unhit hunks ==="
           python3 ../fix_hunks.py
-          echo "=== insert manual hooks ==="
           python3 ../hooks_v2.py
           echo "=== FINAL CHECK ==="
           grep -c path_umount fs/namespace.c fs/internal.h
@@ -85,6 +78,8 @@ jobs:
           grep -c ksu_handle_stat fs/stat.c
           grep -c ksu_handle_input_handle_event drivers/input/input.c
           grep -c ksu_handle_devpts drivers/tty/pty.c
+          echo "=== android_kabi_reserved 检查 ==="
+          grep -c android_kabi_reserved fs/dcache.c || echo "0 (good)"
 
       - name: "9. config"
         run: |
@@ -110,39 +105,47 @@ jobs:
           $S --enable SDCARD_FS
           $S --enable OVERLAY_FS
           $S --disable WERROR
+          $S --disable KPROBES
           make ARCH=arm64 SUBARCH=arm64 O=out olddefconfig
-          grep -E "CONFIG_KSU=|CONFIG_KSU_SUSFS=|CONFIG_SDCARD_FS=|CONFIG_OVERLAY_FS=" out/.config
+          echo "=== key configs ==="
+          grep -E "CONFIG_KSU=|CONFIG_KSU_SUSFS=|CONFIG_SDCARD_FS=|CONFIG_OVERLAY_FS=|CONFIG_KPROBES|CONFIG_WERROR" out/.config
 
-      - name: "10. build"
-        id: b1
-        continue-on-error: true
+      - name: "10. build (log to file)"
         run: |
           export PATH="$PWD/toolchains/neutron-clang/bin:$PATH"
           cd kernel-source
-          make ARCH=arm64 SUBARCH=arm64 O=out CC=clang CLANG_TRIPLE=aarch64-linux-gnu- CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_ARM32=arm-linux-gnueabi- AS=aarch64-linux-gnu-as LD=ld.lld AR=llvm-ar NM=llvm-nm OBJCOPY=llvm-objcopy OBJDUMP=llvm-objdump STRIP=llvm-strip KCFLAGS="-w -Wno-error" -j$(nproc --all) Image
-
-      - name: "11. retry"
-        if: steps.b1.outcome == 'failure'
-        run: |
-          export PATH="$PWD/toolchains/neutron-clang/bin:$PATH"
-          cd kernel-source
-          make ARCH=arm64 SUBARCH=arm64 O=out CC=clang CLANG_TRIPLE=aarch64-linux-gnu- CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_ARM32=arm-linux-gnueabi- AS=aarch64-linux-gnu-as LD=ld.lld AR=llvm-ar NM=llvm-nm OBJCOPY=llvm-objcopy OBJDUMP=llvm-objdump STRIP=llvm-strip KCFLAGS="-w" -j$(nproc --all) Image
+          set +e
+          make ARCH=arm64 SUBARCH=arm64 O=out CC=clang CLANG_TRIPLE=aarch64-linux-gnu- CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_ARM32=arm-linux-gnueabi- AS=aarch64-linux-gnu-as LD=ld.lld AR=llvm-ar NM=llvm-nm OBJCOPY=llvm-objcopy OBJDUMP=llvm-objdump STRIP=llvm-strip KCFLAGS="-w -Wno-error" -j$(nproc --all) Image > ../build.log 2>&1
+          RC=$?
+          echo "make exit code: $RC"
+          echo "===== 所有错误行 ====="
+          grep -nE "错误:|error:|Error [0-9]|undefined|No such file" ../build.log | head -40
+          echo "===== 日志末尾 60 行 ====="
+          tail -60 ../build.log
+          if [ $RC -ne 0 ]; then exit 1; fi
           ls -lh arch/arm64/boot/Image
 
-      - name: "12. pack"
+      - name: "11. pack"
         run: |
           git clone --depth=1 https://github.com/osm0sis/AnyKernel3.git ak3
           rm -rf ak3/.git ak3/Image ak3/Image.gz ak3/dtb ak3/modules ak3/patch
           cp kernel-source/out/arch/arm64/boot/Image ak3/Image
           cp anykernel.sh ak3/anykernel.sh
           cd ak3
-          zip -r9 ../nabu-v11-KSU-SUSFS.zip . -x "*.git*"
+          zip -r9 ../nabu-v12-KSU-SUSFS.zip . -x "*.git*"
           cd ..
-          sha256sum nabu-v11-KSU-SUSFS.zip
-          ls -lh nabu-v11-KSU-SUSFS.zip
+          sha256sum nabu-v12-KSU-SUSFS.zip
+          ls -lh nabu-v12-KSU-SUSFS.zip
 
-      - name: "13. upload"
+      - name: "12. upload"
         uses: actions/upload-artifact@v4
         with:
-          name: nabu-v11-KSU-SUSFS
-          path: nabu-v11-KSU-SUSFS.zip
+          name: nabu-v12-KSU-SUSFS
+          path: nabu-v12-KSU-SUSFS.zip
+
+      - name: "13. upload build log on failure"
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-log
+          path: build.log
