@@ -1,0 +1,108 @@
+name: "Build nabu KernelSU-Next + SUSFS"
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "1. 环境准备"
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y build-essential git zip bc flex bison libssl-dev \
+            libelf-dev python3 device-tree-compiler aria2 ccache
+
+      - name: "2. 装 Clang 工具链"
+        run: |
+          mkdir -p ${{ github.workspace }}/toolchains/neutron-clang
+          cd ${{ github.workspace }}/toolchains/neutron-clang
+          aria2c https://raw.githubusercontent.com/Neutron-Toolchains/antman/main/antman
+          chmod +x antman
+          ./antman -S
+          ./antman -I
+
+      - name: "3. 拉内核源码（nabu 4.14 / Mahiro）"
+        run: |
+          git clone --depth=1 -b KernelSU \
+            https://github.com/utziacre/android_kernel_xiaomi_nabu.git kernel-source
+
+      - name: "4. 换入 KernelSU-Next v3.1.0-legacy"
+        run: |
+          cd ${{ github.workspace }}
+          git clone --depth=1 -b legacy https://github.com/KernelSU-Next/KernelSU-Next.git ksu-next
+          cd ksu-next
+          git fetch --depth=1 origin tag v3.1.0-legacy
+          git checkout v3.1.0-legacy
+          cd ${{ github.workspace }}
+          rm -rf kernel-source/drivers/kernelsu
+          cp -r ksu-next/kernel kernel-source/drivers/kernelsu
+          sed -i 's/KSU_VERSION_FALLBACK := 1/KSU_VERSION_FALLBACK := 33024/' kernel-source/drivers/kernelsu/Kbuild || true
+          sed -i 's/KSU_VERSION_TAG_FALLBACK := v0.0.1/KSU_VERSION_TAG_FALLBACK := v3.1.0-legacy/' kernel-source/drivers/kernelsu/Kbuild || true
+
+      - name: "5. 打 manual hook 补丁（4.14 没有 KPROBES，必须）"
+        run: |
+          cd ${{ github.workspace }}/kernel-source
+          aria2c https://raw.githubusercontent.com/DurkaEbanaya/nabu-hyperos-ksu-kernel/main/manual-hooks.patch
+          patch -p1 --forward < manual-hooks.patch
+
+      - name: "6. 打 SUSFS 补丁"
+        run: |
+          cd ${{ github.workspace }}
+          git clone --depth=1 -b kernel-4.14 https://github.com/ShirkNeko/susfs4ksu.git susfs
+          cd kernel-source
+          cp -r ${{ github.workspace }}/susfs/kernel_patches/fs/* fs/ || true
+          cp -r ${{ github.workspace }}/susfs/kernel_patches/include/linux/* include/linux/ || true
+          patch -p1 --forward < ${{ github.workspace }}/susfs/kernel_patches/50_add_susfs_in_kernel-4.14.patch
+
+      - name: "7. 生成并修改 .config"
+        run: |
+          export PATH="${{ github.workspace }}/toolchains/neutron-clang/bin:$PATH"
+          cd ${{ github.workspace }}/kernel-source
+          make ARCH=arm64 SUBARCH=arm64 O=out nabu_defconfig
+          S="scripts/config --file out/.config"
+          $S --enable KSU
+          $S --enable KSU_MANUAL_HOOK
+          $S --enable KSU_SUSFS
+          $S --enable KSU_SUSFS_SUS_PATH
+          $S --enable KSU_SUSFS_SUS_MOUNT
+          $S --enable KSU_SUSFS_SUS_KSTAT
+          $S --enable KSU_SUSFS_SPOOF_UNAME
+          $S --enable KSU_SUSFS_HIDE_KSU_SUSFS_SYMBOLS
+          $S --enable KSU_SUSFS_ENABLE_LOG
+          $S --enable SDCARD_FS
+          $S --enable OVERLAY_FS
+          make ARCH=arm64 SUBARCH=arm64 O=out olddefconfig
+          grep -E "CONFIG_KSU|CONFIG_SUSFS|CONFIG_SDCARD_FS" out/.config
+
+      - name: "8. 编译内核"
+        run: |
+          export PATH="${{ github.workspace }}/toolchains/neutron-clang/bin:$PATH"
+          cd ${{ github.workspace }}/kernel-source
+          make ARCH=arm64 SUBARCH=arm64 O=out \
+            CLANG_TRIPLE=aarch64-linux-gnu- \
+            CROSS_COMPILE=aarch64-linux-gnu- \
+            CROSS_COMPILE_ARM32=arm-linux-gnueabi- \
+            LLVM=1 LLVM_IAS=1 LD=ld.lld \
+            CC="ccache clang" -j$(nproc --all) Image
+
+      - name: "9. 打包成 AnyKernel3 zip"
+        run: |
+          cd ${{ github.workspace }}
+          git clone --depth=1 https://github.com/osm0sis/AnyKernel3.git ak3
+          rm -rf ak3/.git ak3/Image ak3/Image.gz ak3/dtb
+          cp kernel-source/out/arch/arm64/boot/Image ak3/Image
+          sed -i 's/^kernel.string=.*/kernel.string=nabu KernelSU-Next v3.1.0-legacy + SUSFS/' ak3/anykernel.sh
+          sed -i 's/^device.name1=.*/device.name1=nabu/' ak3/anykernel.sh
+          sed -i 's/^do.devicecheck=.*/do.devicecheck=1/' ak3/anykernel.sh
+          sed -i 's/^is_slot_device=.*/is_slot_device=1/' ak3/anykernel.sh
+          cd ak3
+          zip -r9 ${{ github.workspace }}/nabu-KSU-Next-SUSFS.zip . -x "*.git*"
+          cd ..
+          sha256sum nabu-KSU-Next-SUSFS.zip
+
+      - name: "10. 上传产物"
+        uses: actions/upload-artifact@v4
+        with:
+          name: nabu-KSU-Next-SUSFS
+          path: nabu-KSU-Next-SUSFS.zip
