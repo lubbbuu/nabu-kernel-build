@@ -14,8 +14,8 @@ jobs:
 
       - name: "2. 装 Clang 工具链"
         run: |
-          mkdir -p ${GITHUB_WORKSPACE}/toolchains/neutron-clang
-          cd ${GITHUB_WORKSPACE}/toolchains/neutron-clang
+          mkdir -p toolchains/neutron-clang
+          cd toolchains/neutron-clang
           aria2c https://raw.githubusercontent.com/Neutron-Toolchains/antman/main/antman
           chmod +x antman
           ./antman -S
@@ -27,45 +27,47 @@ jobs:
 
       - name: "4. 还原 hook 脚本"
         run: |
-          echo 'IyEvdXNyL2Jpbi9lbnYgcHl0aG9uMwojIC0qLSBjb2Rpbmc6IHV0Zi04IC0qLQoiIiLnu5kgNC4xNCDpnZ4gR0tJIOWGheaguOa6kOeggeaPkuWFpSBLZXJuZWxTVS1OZXh0IG1hbnVhbCBob29r44CCCueUqOazle+8muWcqOWGheaguOa6kOeggeagueebruW9leaJp+ihjCAgcHl0aG9uMyBpbnNlcnRfaG9va3MucHkK5bmC562J77ya5bey5o+S5YWl6L+H55qE5Lya6Ieq5Yqo6Lez6L+H44CCCiIiIgppbXBvcnQgb3MKaW1wb3J0IHN5cwoKSE9PS1MgPSBbXQoKCmRlZiBob29rKHBhdGgsIGZpbmQsIHJlcGwsIGxhYmVsKToKICAgIEhPT0tTLmFwcGVuZCgocGF0aCwgZmluZCwgcmVwbCwgbGFiZWwpKQoKCiMgLS0tLS0tLS0tLS0tLS0tLSAxKSBrZXJuZWwvcmVib290LmMgOiBzdXBlcmNhbGwg5YWl5Y+jIC0tLS0tLS0tLS0tLS0tLS0KaG9vaygKICAgICJrZXJuZWwvcmVib290LmMiLAogICAgIlNZU0NBTExfREVGSU5FNChyZWJvb3QsIGludCwgbWFnaWMxLCBpbnQsIG1hZ2ljMiwgdW5zaWduZWQgaW50LCBjbWQsIiwKICAgICIiIiNpZmRlZiBDT05GSUdfS1NVCmV4dGVybiBpbnQga3N1X2hhbmRsZV9zeXNfcmVib290KGludCBtYWdpYzEsIGludCBtYWdpYzIsIHVuc2lnbmVkIGludCBjbWQsCgkJdm9pZCBfX3VzZXIgKiphcmcpOwojZW5kaWYKClNZU0NBTExfREVGSU5FNChyZWJvb3QsIGludCwgbWFnaWMxLCBpbnQsIG1hZ2ljMiwgdW5zaWduZWQgaW50LCBjbWQsIiIiLAogICAgInJlYm9vdC5jIOWjsOaYjiIsCikKCmhvb2soCiAgICAia2VybmVsL3JlYm9vdC5jIiwKICAgICIiIglzdHJ1Y3QgcGlkX25hbWVzcGFjZSAqcGlkX25zID0gdGFza19hY3RpdmVfcGlkX25zKGN1cnJlbnQpOwoJY2hhciBidWZmZXJbMjU2XTsKCWludCByZXQgPSAwOwoiIiIsCiAgICAiIiIJc3RydWN0IHBpZF9uYW1lc3BhY2UgKnBpZF9ucyA9IHRhc2tfYWN0aXZlX3BpZF9ucyhjdXJyZW50KTsKCWNoYXIgYnVmZmVyWzI1Nl07CglpbnQgcmV0ID0gMDsKCiNpZmRlZiBDT05GSUdfS1NVCgl7CgkJaW50IF9fa3N1X3JldCA9IGtzdV9oYW5kbGVfc3lzX3JlYm9vdChtYWdpYzEsIG1hZ2ljMiwgY21kLAoJCQkJKHZvaWQgX191c2VyICoqKSZhcmcpOwoJCWlmIChfX2tzdV9yZXQpCgkJCXJldHVybiBfX2tzdV9yZXQ7Cgl9CiNlbmRpZgoiIiIsCiAgICAicmVib290LmMg6LCD55SoIiwKKQoKIyAtLS0tLS0tLS0tLS0tLS0tIDIpIGtlcm5lbC9zeXMuYyA6IHNldHJlc3VpZCAtLS0tLS0tLS0tLS0tLS0tCmhvb2soCiAgICAia2VybmVsL3N5cy5jIiwKICAgICIiIlNZU0NBTExfREVGSU5FMyhzZXRyZXN1aWQsIHVpZF90LCBydWlkLCB1aWRfdCwgZXVpZCwgdWlkX3QsIHN1aWQpCnsKIiIiLAogICAgIiIiU1lTQ0FMTF9ERUZJTkUzKHNldHJlc3VpZCwgdWlkX3QsIHJ1aWQsIHVpZF90LCBldWlkLCB1aWRfdCwgc3VpZCkKewojaWZkZWYgQ09ORklHX0tTVQoJZXh0ZXJuIGludCBrc3VfaGFuZGxlX3NldHJlc3VpZCh1aWRfdCBydWlkLCB1aWRfdCBldWlkLCB1aWRfdCBzdWlkKTsKCWtzdV9oYW5kbGVfc2V0cmVzdWlkKHJ1aWQsIGV1aWQsIHN1aWQpOwojZW5kaWYKCiIiIiwKICAgICJzeXMuYyBzZXRyZXN1aWQiLAopCgojIC0tLS0tLS0tLS0tLS0tLS0gMykgZnMvc3RhdC5jIDogc3RhdCDkvKroo4UgLS0tLS0tLS0tLS0tLS0tLQpob29rKAogICAgImZzL3N0YXQuYyIsCiAgICAiaW50IHZmc19zdGF0eChpbnQgZGZkLCBjb25zdCBjaGFyIF9fdXNlciAqZmlsZW5hbWUsIGludCBmbGFncywiLAogICAgIiIiI2lmZGVmIENPTkZJR19LU1UKZXh0ZXJuIGludCBrc3VfaGFuZGxlX3N0YXQoaW50ICpkZmQsIGNvbnN0IGNoYXIgX191c2VyICoqZmlsZW5hbWVfdXNlciwgaW50ICpmbGFncyk7CiNlbmRpZgoKaW50IHZmc19zdGF0eChpbnQgZGZkLCBjb25zdCBjaGFyIF9fdXNlciAqZmlsZW5hbWUsIGludCBmbGFncywiIiIsCiAgICAic3RhdC5jIOWjsOaYjiIsCikKCmhvb2soCiAgICAiZnMvc3RhdC5jIiwKICAgICIiIglzdHJ1Y3QgcGF0aCBwYXRoOwoJaW50IGVycm9yID0gLUVJTlZBTDsKCXVuc2lnbmVkIGludCBsb29rdXBfZmxhZ3MgPSBMT09LVVBfRk9MTE9XIHwgTE9PS1VQX0FVVE9NT1VOVDsKIiIiLAogICAgIiIiCXN0cnVjdCBwYXRoIHBhdGg7CglpbnQgZXJyb3IgPSAtRUlOVkFMOwoJdW5zaWduZWQgaW50IGxvb2t1cF9mbGFncyA9IExPT0tVUF9GT0xMT1cgfCBMT09LVVBfQVVUT01PVU5UOwoKI2lmZGVmIENPTkZJR19LU1UKCWtzdV9oYW5kbGVfc3RhdCgmZGZkLCAmZmlsZW5hbWUsICZmbGFncyk7CiNlbmRpZgoiIiIsCiAgICAic3RhdC5jIOiwg+eUqCIsCikKCiMgLS0tLS0tLS0tLS0tLS0tLSA0KSBkcml2ZXJzL2lucHV0L2lucHV0LmMgOiDovpPlhaXkuovku7YgLS0tLS0tLS0tLS0tLS0tLQpob29rKAogICAgImRyaXZlcnMvaW5wdXQvaW5wdXQuYyIsCiAgICAiIiJzdGF0aWMgdm9pZCBpbnB1dF9oYW5kbGVfZXZlbnQoc3RydWN0IGlucHV0X2RldiAqZGV2LAoJCQkgICAgICAgdW5zaWduZWQgaW50IHR5cGUsIHVuc2lnbmVkIGludCBjb2RlLCBpbnQgdmFsdWUpCnsKIiIiLAogICAgIiIic3RhdGljIHZvaWQgaW5wdXRfaGFuZGxlX2V2ZW50KHN0cnVjdCBpbnB1dF9kZXYgKmRldiwKCQkJICAgICAgIHVuc2lnbmVkIGludCB0eXBlLCB1bnNpZ25lZCBpbnQgY29kZSwgaW50IHZhbHVlKQp7CiNpZmRlZiBDT05GSUdfS1NVCglleHRlcm4gaW50IGtzdV9oYW5kbGVfaW5wdXRfaGFuZGxlX2V2ZW50KHVuc2lnbmVkIGludCAqdHlwZSwKCQkJdW5zaWduZWQgaW50ICpjb2RlLCBpbnQgKnZhbHVlKTsKCWtzdV9oYW5kbGVfaW5wdXRfaGFuZGxlX2V2ZW50KCZ0eXBlLCAmY29kZSwgJnZhbHVlKTsKI2VuZGlmCgoiIiIsCiAgICAiaW5wdXQuYyDovpPlhaXkuovku7YiLAopCgoKZGVmIG1haW4oKToKICAgIG9rID0gc2tpcCA9IGZhaWwgPSAwCiAgICBmb3IgcGF0aCwgZmluZCwgcmVwbCwgbGFiZWwgaW4gSE9PS1M6CiAgICAgICAgaWYgbm90IG9zLnBhdGguaXNmaWxlKHBhdGgpOgogICAgICAgICAgICBwcmludCgiW01JU1MgRklMRV0gJXMgKCVzKSIgJSAocGF0aCwgbGFiZWwpKQogICAgICAgICAgICBmYWlsICs9IDEKICAgICAgICAgICAgY29udGludWUKICAgICAgICB3aXRoIG9wZW4ocGF0aCwgInIiLCBlbmNvZGluZz0idXRmLTgiLCBlcnJvcnM9InN1cnJvZ2F0ZWVzY2FwZSIpIGFzIGZoOgogICAgICAgICAgICBzcmMgPSBmaC5yZWFkKCkKICAgICAgICAjIOW3sue7j+aPkui/h+eahOeJueW+ge+8mnJlcGwg6YeM54us5pyJ55qEIGtzdV9oYW5kbGVfeHh4IOiwg+eUqAogICAgICAgIG1hcmtlciA9ICJrc3VfaGFuZGxlX3N5c19yZWJvb3QobWFnaWMxIiBpZiAi6LCD55SoIiBpbiBsYWJlbCBhbmQgInJlYm9vdCIgaW4gcGF0aCBlbHNlIE5vbmUKICAgICAgICBpZiAia3N1X2hhbmRsZV8iIGluIHNyYyBhbmQgZmluZCBub3QgaW4gc3JjOgogICAgICAgICAgICAjIOmUmueCueW3suiiq+iHquW3seaUueWGmei/h++8jOivtOaYjuS4iuS4gOi9ruW3suaPkuWFpQogICAgICAgICAgICBwcmludCgiW1NLSVAg5bey5o+S5YWlXSAlcyAoJXMpIiAlIChwYXRoLCBsYWJlbCkpCiAgICAgICAgICAgIHNraXAgKz0gMQogICAgICAgICAgICBjb250aW51ZQogICAgICAgIGlmIGZpbmQgbm90IGluIHNyYzoKICAgICAgICAgICAgcHJpbnQoIltNSVNTIEFOQ0hPUl0gJXMgKCVzKSIgJSAocGF0aCwgbGFiZWwpKQogICAgICAgICAgICBmYWlsICs9IDEKICAgICAgICAgICAgY29udGludWUKICAgICAgICBpZiBzcmMuY291bnQoZmluZCkgPiAxOgogICAgICAgICAgICBwcmludCgiW1dBUk4g5aSa5aSE5Yy56YWN77yM5Y+q5pS556ys5LiA5aSEXSAlcyAoJXMpIGNvdW50PSVkIgogICAgICAgICAgICAgICAgICAlIChwYXRoLCBsYWJlbCwgc3JjLmNvdW50KGZpbmQpKSkKICAgICAgICBzcmMgPSBzcmMucmVwbGFjZShmaW5kLCByZXBsLCAxKQogICAgICAgIHdpdGggb3BlbihwYXRoLCAidyIsIGVuY29kaW5nPSJ1dGYtOCIsIGVycm9ycz0ic3Vycm9nYXRlZXNjYXBlIikgYXMgZmg6CiAgICAgICAgICAgIGZoLndyaXRlKHNyYykKICAgICAgICBwcmludCgiW09LIOW3suaPkuWFpV0gJXMgKCVzKSIgJSAocGF0aCwgbGFiZWwpKQogICAgICAgIG9rICs9IDEKCiAgICBwcmludCgiLS0tLSDnu5Pmnpw6IOaPkuWFpSAlZCwg6Lez6L+HICVkLCDlpLHotKUgJWQgLS0tLSIgJSAob2ssIHNraXAsIGZhaWwpKQogICAgaWYgZmFpbDoKICAgICAgICBzeXMuZXhpdCgzKQoKCmlmIF9fbmFtZV9fID09ICJfX21haW5fXyI6CiAgICBtYWluKCkK' | base64 -d > ${GITHUB_WORKSPACE}/insert_hooks.py
-          python3 -c "import ast;ast.parse(open('/insert_hooks.py').read());print('hook script syntax OK')"
-          wc -l ${GITHUB_WORKSPACE}/insert_hooks.py
+          echo 'IyEvdXNyL2Jpbi9lbnYgcHl0aG9uMwojIC0qLSBjb2Rpbmc6IHV0Zi04IC0qLQoiIiLnu5kgNC4xNCDpnZ4gR0tJIOWGheaguOa6kOeggeaPkuWFpSBLZXJuZWxTVS1OZXh0IG1hbnVhbCBob29r44CCCueUqOazle+8muWcqOWGheaguOa6kOeggeagueebruW9leaJp+ihjCAgcHl0aG9uMyBpbnNlcnRfaG9va3MucHkK5bmC562J77ya5bey5o+S5YWl6L+H55qE5Lya6Ieq5Yqo6Lez6L+H44CCCiIiIgppbXBvcnQgb3MKaW1wb3J0IHN5cwoKSE9PS1MgPSBbXQoKCmRlZiBob29rKHBhdGgsIGZpbmQsIHJlcGwsIGxhYmVsKToKICAgIEhPT0tTLmFwcGVuZCgocGF0aCwgZmluZCwgcmVwbCwgbGFiZWwpKQoKCiMgLS0tLS0tLS0tLS0tLS0tLSAxKSBrZXJuZWwvcmVib290LmMgOiBzdXBlcmNhbGwg5YWl5Y+jIC0tLS0tLS0tLS0tLS0tLS0KaG9vaygKICAgICJrZXJuZWwvcmVib290LmMiLAogICAgIlNZU0NBTExfREVGSU5FNChyZWJvb3QsIGludCwgbWFnaWMxLCBpbnQsIG1hZ2ljMiwgdW5zaWduZWQgaW50LCBjbWQsIiwKICAgICIiIiNpZmRlZiBDT05GSUdfS1NVCmV4dGVybiBpbnQga3N1X2hhbmRsZV9zeXNfcmVib290KGludCBtYWdpYzEsIGludCBtYWdpYzIsIHVuc2lnbmVkIGludCBjbWQsCgkJdm9pZCBfX3VzZXIgKiphcmcpOwojZW5kaWYKClNZU0NBTExfREVGSU5FNChyZWJvb3QsIGludCwgbWFnaWMxLCBpbnQsIG1hZ2ljMiwgdW5zaWduZWQgaW50LCBjbWQsIiIiLAogICAgInJlYm9vdC5jIOWjsOaYjiIsCikKCmhvb2soCiAgICAia2VybmVsL3JlYm9vdC5jIiwKICAgICIiIglzdHJ1Y3QgcGlkX25hbWVzcGFjZSAqcGlkX25zID0gdGFza19hY3RpdmVfcGlkX25zKGN1cnJlbnQpOwoJY2hhciBidWZmZXJbMjU2XTsKCWludCByZXQgPSAwOwoiIiIsCiAgICAiIiIJc3RydWN0IHBpZF9uYW1lc3BhY2UgKnBpZF9ucyA9IHRhc2tfYWN0aXZlX3BpZF9ucyhjdXJyZW50KTsKCWNoYXIgYnVmZmVyWzI1Nl07CglpbnQgcmV0ID0gMDsKCiNpZmRlZiBDT05GSUdfS1NVCgl7CgkJaW50IF9fa3N1X3JldCA9IGtzdV9oYW5kbGVfc3lzX3JlYm9vdChtYWdpYzEsIG1hZ2ljMiwgY21kLAoJCQkJKHZvaWQgX191c2VyICoqKSZhcmcpOwoJCWlmIChfX2tzdV9yZXQpCgkJCXJldHVybiBfX2tzdV9yZXQ7Cgl9CiNlbmRpZgoiIiIsCiAgICAicmVib290LmMg6LCD55SoIiwKKQoKIyAtLS0tLS0tLS0tLS0tLS0tIDIpIGtlcm5lbC9zeXMuYyA6IHNldHJlc3VpZCAtLS0tLS0tLS0tLS0tLS0tCmhvb2soCiAgICAia2VybmVsL3N5cy5jIiwKICAgICIiIlNZU0NBTExfREVGSU5FMyhzZXRyZXN1aWQsIHVpZF90LCBydWlkLCB1aWRfdCwgZXVpZCwgdWlkX3QsIHN1aWQpCnsKIiIiLAogICAgIiIiU1lTQ0FMTF9ERUZJTkUzKHNldHJlc3VpZCwgdWlkX3QsIHJ1aWQsIHVpZF90LCBldWlkLCB1aWRfdCwgc3VpZCkKewojaWZkZWYgQ09ORklHX0tTVQoJZXh0ZXJuIGludCBrc3VfaGFuZGxlX3NldHJlc3VpZCh1aWRfdCBydWlkLCB1aWRfdCBldWlkLCB1aWRfdCBzdWlkKTsKCWtzdV9oYW5kbGVfc2V0cmVzdWlkKHJ1aWQsIGV1aWQsIHN1aWQpOwojZW5kaWYKCiIiIiwKICAgICJzeXMuYyBzZXRyZXN1aWQiLAopCgojIC0tLS0tLS0tLS0tLS0tLS0gMykgZnMvc3RhdC5jIDogc3RhdCDkvKroo4UgLS0tLS0tLS0tLS0tLS0tLQpob29rKAogICAgImZzL3N0YXQuYyIsCiAgICAiaW50IHZmc19zdGF0eChpbnQgZGZkLCBjb25zdCBjaGFyIF9fdXNlciAqZmlsZW5hbWUsIGludCBmbGFncywiLAogICAgIiIiI2lmZGVmIENPTkZJR19LU1UKZXh0ZXJuIGludCBrc3VfaGFuZGxlX3N0YXQoaW50ICpkZmQsIGNvbnN0IGNoYXIgX191c2VyICoqZmlsZW5hbWVfdXNlciwgaW50ICpmbGFncyk7CiNlbmRpZgoKaW50IHZmc19zdGF0eChpbnQgZGZkLCBjb25zdCBjaGFyIF9fdXNlciAqZmlsZW5hbWUsIGludCBmbGFncywiIiIsCiAgICAic3RhdC5jIOWjsOaYjiIsCikKCmhvb2soCiAgICAiZnMvc3RhdC5jIiwKICAgICIiIglzdHJ1Y3QgcGF0aCBwYXRoOwoJaW50IGVycm9yID0gLUVJTlZBTDsKCXVuc2lnbmVkIGludCBsb29rdXBfZmxhZ3MgPSBMT09LVVBfRk9MTE9XIHwgTE9PS1VQX0FVVE9NT1VOVDsKIiIiLAogICAgIiIiCXN0cnVjdCBwYXRoIHBhdGg7CglpbnQgZXJyb3IgPSAtRUlOVkFMOwoJdW5zaWduZWQgaW50IGxvb2t1cF9mbGFncyA9IExPT0tVUF9GT0xMT1cgfCBMT09LVVBfQVVUT01PVU5UOwoKI2lmZGVmIENPTkZJR19LU1UKCWtzdV9oYW5kbGVfc3RhdCgmZGZkLCAmZmlsZW5hbWUsICZmbGFncyk7CiNlbmRpZgoiIiIsCiAgICAic3RhdC5jIOiwg+eUqCIsCikKCiMgLS0tLS0tLS0tLS0tLS0tLSA0KSBkcml2ZXJzL2lucHV0L2lucHV0LmMgOiDovpPlhaXkuovku7YgLS0tLS0tLS0tLS0tLS0tLQpob29rKAogICAgImRyaXZlcnMvaW5wdXQvaW5wdXQuYyIsCiAgICAiIiJzdGF0aWMgdm9pZCBpbnB1dF9oYW5kbGVfZXZlbnQoc3RydWN0IGlucHV0X2RldiAqZGV2LAoJCQkgICAgICAgdW5zaWduZWQgaW50IHR5cGUsIHVuc2lnbmVkIGludCBjb2RlLCBpbnQgdmFsdWUpCnsKIiIiLAogICAgIiIic3RhdGljIHZvaWQgaW5wdXRfaGFuZGxlX2V2ZW50KHN0cnVjdCBpbnB1dF9kZXYgKmRldiwKCQkJICAgICAgIHVuc2lnbmVkIGludCB0eXBlLCB1bnNpZ25lZCBpbnQgY29kZSwgaW50IHZhbHVlKQp7CiNpZmRlZiBDT05GSUdfS1NVCglleHRlcm4gaW50IGtzdV9oYW5kbGVfaW5wdXRfaGFuZGxlX2V2ZW50KHVuc2lnbmVkIGludCAqdHlwZSwKCQkJdW5zaWduZWQgaW50ICpjb2RlLCBpbnQgKnZhbHVlKTsKCWtzdV9oYW5kbGVfaW5wdXRfaGFuZGxlX2V2ZW50KCZ0eXBlLCAmY29kZSwgJnZhbHVlKTsKI2VuZGlmCgoiIiIsCiAgICAiaW5wdXQuYyDovpPlhaXkuovku7YiLAopCgoKZGVmIG1haW4oKToKICAgIG9rID0gc2tpcCA9IGZhaWwgPSAwCiAgICBmb3IgcGF0aCwgZmluZCwgcmVwbCwgbGFiZWwgaW4gSE9PS1M6CiAgICAgICAgaWYgbm90IG9zLnBhdGguaXNmaWxlKHBhdGgpOgogICAgICAgICAgICBwcmludCgiW01JU1MgRklMRV0gJXMgKCVzKSIgJSAocGF0aCwgbGFiZWwpKQogICAgICAgICAgICBmYWlsICs9IDEKICAgICAgICAgICAgY29udGludWUKICAgICAgICB3aXRoIG9wZW4ocGF0aCwgInIiLCBlbmNvZGluZz0idXRmLTgiLCBlcnJvcnM9InN1cnJvZ2F0ZWVzY2FwZSIpIGFzIGZoOgogICAgICAgICAgICBzcmMgPSBmaC5yZWFkKCkKICAgICAgICAjIOW3sue7j+aPkui/h+eahOeJueW+ge+8mnJlcGwg6YeM54us5pyJ55qEIGtzdV9oYW5kbGVfeHh4IOiwg+eUqAogICAgICAgIG1hcmtlciA9ICJrc3VfaGFuZGxlX3N5c19yZWJvb3QobWFnaWMxIiBpZiAi6LCD55SoIiBpbiBsYWJlbCBhbmQgInJlYm9vdCIgaW4gcGF0aCBlbHNlIE5vbmUKICAgICAgICBpZiAia3N1X2hhbmRsZV8iIGluIHNyYyBhbmQgZmluZCBub3QgaW4gc3JjOgogICAgICAgICAgICAjIOmUmueCueW3suiiq+iHquW3seaUueWGmei/h++8jOivtOaYjuS4iuS4gOi9ruW3suaPkuWFpQogICAgICAgICAgICBwcmludCgiW1NLSVAg5bey5o+S5YWlXSAlcyAoJXMpIiAlIChwYXRoLCBsYWJlbCkpCiAgICAgICAgICAgIHNraXAgKz0gMQogICAgICAgICAgICBjb250aW51ZQogICAgICAgIGlmIGZpbmQgbm90IGluIHNyYzoKICAgICAgICAgICAgcHJpbnQoIltNSVNTIEFOQ0hPUl0gJXMgKCVzKSIgJSAocGF0aCwgbGFiZWwpKQogICAgICAgICAgICBmYWlsICs9IDEKICAgICAgICAgICAgY29udGludWUKICAgICAgICBpZiBzcmMuY291bnQoZmluZCkgPiAxOgogICAgICAgICAgICBwcmludCgiW1dBUk4g5aSa5aSE5Yy56YWN77yM5Y+q5pS556ys5LiA5aSEXSAlcyAoJXMpIGNvdW50PSVkIgogICAgICAgICAgICAgICAgICAlIChwYXRoLCBsYWJlbCwgc3JjLmNvdW50KGZpbmQpKSkKICAgICAgICBzcmMgPSBzcmMucmVwbGFjZShmaW5kLCByZXBsLCAxKQogICAgICAgIHdpdGggb3BlbihwYXRoLCAidyIsIGVuY29kaW5nPSJ1dGYtOCIsIGVycm9ycz0ic3Vycm9nYXRlZXNjYXBlIikgYXMgZmg6CiAgICAgICAgICAgIGZoLndyaXRlKHNyYykKICAgICAgICBwcmludCgiW09LIOW3suaPkuWFpV0gJXMgKCVzKSIgJSAocGF0aCwgbGFiZWwpKQogICAgICAgIG9rICs9IDEKCiAgICBwcmludCgiLS0tLSDnu5Pmnpw6IOaPkuWFpSAlZCwg6Lez6L+HICVkLCDlpLHotKUgJWQgLS0tLSIgJSAob2ssIHNraXAsIGZhaWwpKQogICAgaWYgZmFpbDoKICAgICAgICBzeXMuZXhpdCgzKQoKCmlmIF9fbmFtZV9fID09ICJfX21haW5fXyI6CiAgICBtYWluKCkK' | base64 -d > insert_hooks.py
+          ls -l insert_hooks.py
+          python3 -c "import ast;ast.parse(open('insert_hooks.py').read());print('hook script syntax OK')"
 
       - name: "5. 插入 manual hook"
         run: |
-          cd ${GITHUB_WORKSPACE}/kernel-source
-          python3 ${GITHUB_WORKSPACE}/insert_hooks.py
+          cd kernel-source
+          python3 ../insert_hooks.py
           echo "=== 验证 hit 数 ==="
           grep -c ksu_handle kernel/reboot.c kernel/sys.c fs/stat.c drivers/input/input.c
 
       - name: "6. 接入 KernelSU-Next v3.1.0-legacy"
         run: |
-          cd ${GITHUB_WORKSPACE}
           git clone --depth=1 -b legacy https://github.com/KernelSU-Next/KernelSU-Next.git ksu-next
-          cd ksu-next && git fetch --depth=1 origin tag v3.1.0-legacy && git checkout v3.1.0-legacy
-          cd ${GITHUB_WORKSPACE}
+          cd ksu-next
+          git fetch --depth=1 origin tag v3.1.0-legacy
+          git checkout v3.1.0-legacy
+          cd ..
           rm -rf kernel-source/drivers/kernelsu
           cp -r ksu-next/kernel kernel-source/drivers/kernelsu
           sed -i 's/KSU_VERSION_FALLBACK := 1/KSU_VERSION_FALLBACK := 33024/' kernel-source/drivers/kernelsu/Kbuild || true
           sed -i 's/KSU_VERSION_TAG_FALLBACK := v0.0.1/KSU_VERSION_TAG_FALLBACK := v3.1.0-legacy/' kernel-source/drivers/kernelsu/Kbuild || true
           grep -q 'kernelsu/' kernel-source/drivers/Makefile || echo 'obj-$(CONFIG_KSU) += kernelsu/' >> kernel-source/drivers/Makefile
           grep -q 'drivers/kernelsu/Kconfig' kernel-source/drivers/Kconfig || sed -i '/^endmenu/i source "drivers/kernelsu/Kconfig"' kernel-source/drivers/Kconfig
+          echo "=== drivers 引用检查 ==="
+          grep -n 'kernelsu' kernel-source/drivers/Makefile kernel-source/drivers/Kconfig
 
       - name: "7. 打 SUSFS 4.14 补丁"
         run: |
-          cd ${GITHUB_WORKSPACE}
           git clone --depth=1 -b kernel-4.14 https://github.com/ShirkNeko/susfs4ksu.git susfs
           cd kernel-source
-          cp -r ${GITHUB_WORKSPACE}/susfs/kernel_patches/fs/* fs/
-          cp -r ${GITHUB_WORKSPACE}/susfs/kernel_patches/include/linux/* include/linux/
-          patch -p1 --forward < ${GITHUB_WORKSPACE}/susfs/kernel_patches/50_add_susfs_in_kernel-4.14.patch || echo "SUSFS patch rejects, continue"
+          cp -r ../susfs/kernel_patches/fs/* fs/
+          cp -r ../susfs/kernel_patches/include/linux/* include/linux/
+          patch -p1 --forward < ../susfs/kernel_patches/50_add_susfs_in_kernel-4.14.patch || echo "SUSFS patch 有 reject，继续"
           echo "=== rej 文件 ==="
           find . -name "*.rej" | head -20
 
       - name: "8. 生成并修改 .config"
         run: |
-          export PATH="${GITHUB_WORKSPACE}/toolchains/neutron-clang/bin:$PATH"
-          cd ${GITHUB_WORKSPACE}/kernel-source
+          export PATH="$PWD/toolchains/neutron-clang/bin:$PATH"
+          cd kernel-source
           make ARCH=arm64 SUBARCH=arm64 O=out nabu_defconfig
           S="scripts/config --file out/.config"
           $S --enable KSU
@@ -84,13 +86,12 @@ jobs:
 
       - name: "9. 编译内核"
         run: |
-          export PATH="${GITHUB_WORKSPACE}/toolchains/neutron-clang/bin:$PATH"
-          cd ${GITHUB_WORKSPACE}/kernel-source
+          export PATH="$PWD/toolchains/neutron-clang/bin:$PATH"
+          cd kernel-source
           make ARCH=arm64 SUBARCH=arm64 O=out CLANG_TRIPLE=aarch64-linux-gnu- CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_ARM32=arm-linux-gnueabi- LLVM=1 LLVM_IAS=1 LD=ld.lld CC="ccache clang" -j$(nproc --all) Image
 
       - name: "10. 打包 AnyKernel3"
         run: |
-          cd ${GITHUB_WORKSPACE}
           git clone --depth=1 https://github.com/osm0sis/AnyKernel3.git ak3
           rm -rf ak3/.git ak3/Image ak3/Image.gz ak3/dtb
           cp kernel-source/out/arch/arm64/boot/Image ak3/Image
@@ -99,9 +100,10 @@ jobs:
           sed -i 's/^do.devicecheck=.*/do.devicecheck=1/' ak3/anykernel.sh
           sed -i 's/^is_slot_device=.*/is_slot_device=1/' ak3/anykernel.sh
           cd ak3
-          zip -r9 ${GITHUB_WORKSPACE}/nabu-KSU-Next-SUSFS.zip . -x "*.git*"
+          zip -r9 ../nabu-KSU-Next-SUSFS.zip . -x "*.git*"
           cd ..
           sha256sum nabu-KSU-Next-SUSFS.zip
+          ls -lh nabu-KSU-Next-SUSFS.zip
 
       - name: "11. 上传产物"
         uses: actions/upload-artifact@v4
