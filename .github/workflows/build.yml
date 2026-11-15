@@ -10,7 +10,7 @@ jobs:
       - name: "1. 环境准备"
         run: |
           sudo apt-get update -y
-          sudo apt-get install -y build-essential git zip bc flex bison libssl-dev libelf-dev python3 device-tree-compiler aria2 ccache
+          sudo apt-get install -y build-essential git zip bc flex bison libssl-dev libelf-dev python3 device-tree-compiler aria2 ccache gcc-aarch64-linux-gnu binutils-aarch64-linux-gnu gcc-arm-linux-gnueabi
 
       - name: "2. 装 Clang 工具链"
         run: |
@@ -51,7 +51,6 @@ jobs:
           sed -i 's/KSU_VERSION_TAG_FALLBACK := v0.0.1/KSU_VERSION_TAG_FALLBACK := v3.1.0-legacy/' kernel-source/drivers/kernelsu/Kbuild || true
           grep -q 'kernelsu/' kernel-source/drivers/Makefile || echo 'obj-$(CONFIG_KSU) += kernelsu/' >> kernel-source/drivers/Makefile
           grep -q 'drivers/kernelsu/Kconfig' kernel-source/drivers/Kconfig || sed -i '/^endmenu/i source "drivers/kernelsu/Kconfig"' kernel-source/drivers/Kconfig
-          echo "=== drivers 引用检查 ==="
           grep -n 'kernelsu' kernel-source/drivers/Makefile kernel-source/drivers/Kconfig
 
       - name: "7. 打 SUSFS 4.14 补丁"
@@ -88,7 +87,20 @@ jobs:
         run: |
           export PATH="$PWD/toolchains/neutron-clang/bin:$PATH"
           cd kernel-source
-          make ARCH=arm64 SUBARCH=arm64 O=out CLANG_TRIPLE=aarch64-linux-gnu- CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_ARM32=arm-linux-gnueabi- LLVM=1 LLVM_IAS=1 LD=ld.lld CC="ccache clang" -j$(nproc --all) Image
+          make ARCH=arm64 SUBARCH=arm64 O=out \
+            CC=clang \
+            CLANG_TRIPLE=aarch64-linux-gnu- \
+            CROSS_COMPILE=aarch64-linux-gnu- \
+            CROSS_COMPILE_ARM32=arm-linux-gnueabi- \
+            AS=aarch64-linux-gnu-as \
+            LD=ld.lld \
+            AR=llvm-ar \
+            NM=llvm-nm \
+            OBJCOPY=llvm-objcopy \
+            OBJDUMP=llvm-objdump \
+            STRIP=llvm-strip \
+            -j$(nproc --all) Image
+          ls -lh arch/arm64/boot/Image
 
       - name: "10. 打包 AnyKernel3"
         run: |
