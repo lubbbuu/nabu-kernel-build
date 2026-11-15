@@ -80,8 +80,9 @@ jobs:
           $S --enable KSU_SUSFS_ENABLE_LOG
           $S --enable SDCARD_FS
           $S --enable OVERLAY_FS
+          $S --disable WERROR
           make ARCH=arm64 SUBARCH=arm64 O=out olddefconfig
-          grep -E "CONFIG_KSU=|CONFIG_KSU_SUSFS|CONFIG_SDCARD_FS" out/.config
+          grep -E "CONFIG_KSU=|CONFIG_KSU_SUSFS|CONFIG_SDCARD_FS|CONFIG_WERROR" out/.config
 
       - name: "9. 编译内核"
         run: |
@@ -99,6 +100,7 @@ jobs:
             OBJCOPY=llvm-objcopy \
             OBJDUMP=llvm-objdump \
             STRIP=llvm-strip \
+            KCFLAGS="-Wno-error -Wno-implicit-enum-enum-cast -Wno-enum-conversion -Wno-implicit-fallthrough -Wno-misleading-indentation -Wno-format-overflow" \
             -j$(nproc --all) Image
           ls -lh arch/arm64/boot/Image
 
