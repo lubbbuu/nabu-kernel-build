@@ -143,7 +143,7 @@ env:
   TARGET_UTS_RELEASE: "4.14.180-perf-gcc5ee28d3084"
   TARGET_VERMAGIC: "4.14.180-perf-gcc5ee28d3084 SMP preempt mod_unload modversions aarch64"
   CONFIG_SHA256: "0e881f458c4fc225f9ffec4e27b6303c8f1a34b23586ec855f8c78419909aa7f"
-  PAYLOAD_SHA256: "7fba89d2f556f49f2dbffa1ec3aa1142681da46df6f3ddbe25004502e76db85f"
+  PAYLOAD_SHA256: "8d11b4bfd0d06da964d5df711489a39d2cf51c6e61d8e633a7d0f4ceff07359c"
   AOSP_CLANG_URL: "https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/refs/tags/android-11.0.0_r1/clang-r377782d.tar.gz"
   # AnyKernel3 HEAD at generation time (git ls-remote ... HEAD). Pinned only to
   # freeze the script the package is built against; it has NOT been validated
