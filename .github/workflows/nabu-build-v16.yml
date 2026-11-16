@@ -143,7 +143,7 @@ env:
   TARGET_UTS_RELEASE: "4.14.180-perf-gcc5ee28d3084"
   TARGET_VERMAGIC: "4.14.180-perf-gcc5ee28d3084 SMP preempt mod_unload modversions aarch64"
   CONFIG_SHA256: "0e881f458c4fc225f9ffec4e27b6303c8f1a34b23586ec855f8c78419909aa7f"
-  PAYLOAD_SHA256: "eea31f8b3a7d4fdbff85591c45047026924650503f67bbe8db5754002f762a11"
+  PAYLOAD_SHA256: "730c16fa7fe16aa7ba6122159ab4ecf21316ddf0df22d578618cadaa4cfd66a1"
   AOSP_CLANG_URL: "https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/refs/tags/android-11.0.0_r1/clang-r377782d.tar.gz"
   # AnyKernel3 HEAD at generation time (git ls-remote ... HEAD). Pinned only to
   # freeze the script the package is built against; it has NOT been validated
@@ -797,6 +797,17 @@ jobs:
             # strncpy_from_user_nofault do not exist in this tree at all.
             python3 nabu_patch.py compat ksu-src
           fi
+
+          # sepolicy.c in v1.0.5 is written for >=5.9 SELinux internals. Two
+          # functions there reference struct filename_trans_key,
+          # policydb_filenametr_search(), the datum stypes ebitmap, trans->next,
+          # a 4-argument hashtab_insert() and db->type_val_to_struct as a **
+          # array - none of which 4.14 has, and upstream puts no version guard
+          # around them. The stage 2 build died on exactly those 15 errors.
+          # Both are only reachable at runtime via ksud's sepolicy ioctl
+          # (core_hook.c -> ksu_handle_sepolicy), so on 4.14 they degrade to a
+          # no-op; no exported symbol, no CRC and no module ABI is affected.
+          python3 nabu_patch.py sepolicy14 ksu-src
           echo "=== KSU markers ==="
           grep -c 'susfs_init'                     ksu-src/kernel/ksu.c             || true
           grep -c 'config KSU_SUSFS'               ksu-src/kernel/Kconfig           || true
