@@ -420,13 +420,12 @@ jobs:
         run: |
           set -euo pipefail
           export PATH="$PWD/tc/bin:$PATH"
-          # Link with GNU bfd, not lld. lld 10 miscomputes a negative file
-          # offset in 4.14's arm64 vmlinux.lds.S and dies with
-          # "output file too large: 18446743524396893... bytes" (a negative
-          # number read as unsigned). clang still compiles everything; only
-          # the final link moves to binutils, which also matches the
-          # "-gcc" tag in the official vermagic. Symbol CRCs come from
-          # genksyms source parsing, so they are compiler-independent.
+          # lld does the final link. An earlier run switched to GNU bfd because
+          # lld 10 died with "output file too large: 18446743524396893... bytes"
+          # (a negative offset read as unsigned) - but that was the same .bss.rtic
+          # layout bug the stub step now strips. bfd is not an option anyway: it
+          # produces a layout kallsyms rejects with "relative symbol value ...
+          # out of range in relative mode" under CONFIG_KALLSYMS_BASE_RELATIVE=y.
           cd src
           if [ "${{ inputs.toolchain }}" = "neutron" ]; then
             # Route B: clang 24 against a 2019 tree. Known breakages and the
@@ -447,7 +446,7 @@ jobs:
           fi
 
           make ARCH=arm64 SUBARCH=arm64 O=out \
-            CC=clang LD=aarch64-linux-gnu-ld AR=llvm-ar NM=llvm-nm \
+            CC=clang LD=ld.lld AR=llvm-ar NM=llvm-nm \
             OBJCOPY=llvm-objcopy OBJDUMP=llvm-objdump STRIP=llvm-strip \
             CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_ARM32=arm-linux-gnueabi- \
             LOCALVERSION= \
@@ -467,7 +466,7 @@ jobs:
           # because stage 0 exists to prove the vermagic and a module that refuses
           # to compile must not hide a good Image.
           make ARCH=arm64 SUBARCH=arm64 O=out \
-            CC=clang LD=aarch64-linux-gnu-ld AR=llvm-ar NM=llvm-nm \
+            CC=clang LD=ld.lld AR=llvm-ar NM=llvm-nm \
             OBJCOPY=llvm-objcopy OBJDUMP=llvm-objdump STRIP=llvm-strip \
             CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_ARM32=arm-linux-gnueabi- \
             LOCALVERSION= \
@@ -563,15 +562,14 @@ jobs:
           if [ "${{ inputs.pack_dtb }}" = "true" ]; then
             echo "--- diagnostic: building dtbs ---"
             export PATH="$PWD/tc/bin:$PATH"
-          # Link with GNU bfd, not lld. lld 10 miscomputes a negative file
-          # offset in 4.14's arm64 vmlinux.lds.S and dies with
-          # "output file too large: 18446743524396893... bytes" (a negative
-          # number read as unsigned). clang still compiles everything; only
-          # the final link moves to binutils, which also matches the
-          # "-gcc" tag in the official vermagic. Symbol CRCs come from
-          # genksyms source parsing, so they are compiler-independent.
+          # lld does the final link. An earlier run switched to GNU bfd because
+          # lld 10 died with "output file too large: 18446743524396893... bytes"
+          # (a negative offset read as unsigned) - but that was the same .bss.rtic
+          # layout bug the stub step now strips. bfd is not an option anyway: it
+          # produces a layout kallsyms rejects with "relative symbol value ...
+          # out of range in relative mode" under CONFIG_KALLSYMS_BASE_RELATIVE=y.
             ( cd src && make ARCH=arm64 SUBARCH=arm64 O=out \
-                CC=clang LD=aarch64-linux-gnu-ld AR=llvm-ar NM=llvm-nm \
+                CC=clang LD=ld.lld AR=llvm-ar NM=llvm-nm \
                 OBJCOPY=llvm-objcopy OBJDUMP=llvm-objdump STRIP=llvm-strip \
                 CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_ARM32=arm-linux-gnueabi- \
                 KCFLAGS="-w -Wno-error" -j"$(nproc --all)" dtbs ) >> build-baseline.log 2>&1
@@ -1060,13 +1058,12 @@ jobs:
         run: |
           set -euo pipefail
           export PATH="$PWD/tc/bin:$PATH"
-          # Link with GNU bfd, not lld. lld 10 miscomputes a negative file
-          # offset in 4.14's arm64 vmlinux.lds.S and dies with
-          # "output file too large: 18446743524396893... bytes" (a negative
-          # number read as unsigned). clang still compiles everything; only
-          # the final link moves to binutils, which also matches the
-          # "-gcc" tag in the official vermagic. Symbol CRCs come from
-          # genksyms source parsing, so they are compiler-independent.
+          # lld does the final link. An earlier run switched to GNU bfd because
+          # lld 10 died with "output file too large: 18446743524396893... bytes"
+          # (a negative offset read as unsigned) - but that was the same .bss.rtic
+          # layout bug the stub step now strips. bfd is not an option anyway: it
+          # produces a layout kallsyms rejects with "relative symbol value ...
+          # out of range in relative mode" under CONFIG_KALLSYMS_BASE_RELATIVE=y.
           cd kernel-source
           if [ "${{ inputs.toolchain }}" = "neutron" ]; then
             echo "KBUILD_CFLAGS += -fcommon" >> Makefile
@@ -1088,7 +1085,7 @@ jobs:
           echo "KSU_EXPECTED_SIZE=$KSU_EXPECTED_SIZE"
 
           make ARCH=arm64 SUBARCH=arm64 O=out \
-            CC=clang LD=aarch64-linux-gnu-ld AR=llvm-ar NM=llvm-nm \
+            CC=clang LD=ld.lld AR=llvm-ar NM=llvm-nm \
             OBJCOPY=llvm-objcopy OBJDUMP=llvm-objdump STRIP=llvm-strip \
             CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_ARM32=arm-linux-gnueabi- \
             LOCALVERSION= \
@@ -1107,7 +1104,7 @@ jobs:
           # Module.symvers would be missing and step 13b (CRC drift) would die on
           # "patched symvers missing". Stage 1/2 need it, so here it is fatal.
           make ARCH=arm64 SUBARCH=arm64 O=out \
-            CC=clang LD=aarch64-linux-gnu-ld AR=llvm-ar NM=llvm-nm \
+            CC=clang LD=ld.lld AR=llvm-ar NM=llvm-nm \
             OBJCOPY=llvm-objcopy OBJDUMP=llvm-objdump STRIP=llvm-strip \
             CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_ARM32=arm-linux-gnueabi- \
             LOCALVERSION= \
