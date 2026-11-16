@@ -535,18 +535,22 @@ jobs:
       - name: "9. dtb diagnostic - why dtbo.img is never rebuilt (Q: dtbo target)"
         run: |
           set -euo pipefail
-          # arch/arm64/Makefile L187 defines KBUILD_DTBO_IMG := dtbo.img and
-          # L223-231 define $(KBUILD_DTBO_IMG): dtbs / $(KBUILD_DTB_IMG): dtbs,
-          # all inside ifeq ($(CONFIG_BUILD_ARM64_DT_OVERLAY),y). The official
-          # config leaves that symbol unset, so the rules exist but never fire.
-          # That is why dtbo.img is never rebuilt here: it always ships from the
-          # working v0.2 package. pack_dtb=true enables the symbol only for a
-          # diagnostic dtbs build; its output still does not enter the package.
-          echo "--- check 1: dtbo.img rule exists in arch/arm64/Makefile (config-gated) ---"
-          grep -qE 'KBUILD_DTBO_IMG[[:space:]]*:=|^\$\(KBUILD_DTBO_IMG\)[[:space:]]*:' \
-            src/arch/arm64/Makefile \
-            || { echo "FATAL: upstream KBUILD_DTBO_IMG rule not found"; exit 1; }
-          echo "confirmed: \$(KBUILD_DTBO_IMG): dtbs exists, gated by CONFIG_BUILD_ARM64_DT_OVERLAY"
+          # Reality check on this tree, which the v16 comment got wrong:
+          # nabu-r-oss does NOT define KBUILD_DTBO_IMG at all. arch/arm64/Makefile
+          # only has KBUILD_DTBS := dtbs, a `dtbs:` rule, and Image-dtb/Image.gz-dtb.
+          # CONFIG_BUILD_ARM64_DT_OVERLAY controls nothing but DTC_FLAGS := -@.
+          # So there is no way to build dtbo.img from this tree even in principle -
+          # dtbo.img always ships from the v0.2 blob, which is what we already do.
+          echo "--- check 1: this tree has no dtbo.img target (expected) ---"
+          if grep -qE 'KBUILD_DTBO_IMG|^\$\(KBUILD_DTBO_IMG\)' src/arch/arm64/Makefile; then
+            echo "NOTE: KBUILD_DTBO_IMG appeared - a dtbo.img target may now exist"
+          else
+            echo "confirmed: no KBUILD_DTBO_IMG in arch/arm64/Makefile, dtbo.img is never built here"
+          fi
+          echo "--- check 1b: the dtbs target does exist ---"
+          grep -qE '^dtbs:' src/arch/arm64/Makefile \
+            || { echo "FATAL: dtbs target missing, unexpected tree"; exit 1; }
+          echo "confirmed: dtbs target present"
 
           echo "--- check 2: BUILD_ARM64_DT_OVERLAY matches the pack_dtb input ---"
           if [ "${{ inputs.pack_dtb }}" = "true" ]; then
