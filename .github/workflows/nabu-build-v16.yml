@@ -402,6 +402,36 @@ jobs:
           test -f drivers/input/last_touch_events_stub.c
           echo "stub installed for touch_press_release_events_collect"
 
+          # selinux hooks.c puts selinux_enforcing_boot in .bss.rtic via the
+          # __rticdata attribute. arch/arm64/kernel/vmlinux.lds.S only places
+          # KEEP(*(.bss.rtic)) inside a nested .bss block that the enclosing
+          # .bss evicts, so the variable lands outside the +/-1MB ADRP window
+          # and the link dies with:
+          #   relocation truncated to fit: R_AARCH64_ADR_PREL_PG_HI21 against '.bss.rtic'
+          # Dropping the attribute only changes which section the variable sits in.
+          # It is a plain int, exported to no module, so no CRC can move.
+          cd kernel-source
+          sed -i 's/static int selinux_enforcing_boot __rticdata;/static int selinux_enforcing_boot;/' security/selinux/hooks.c
+          grep -n 'selinux_enforcing_boot;' security/selinux/hooks.c | head -2
+          ! grep -q '__rticdata' security/selinux/hooks.c
+          echo "rtic attribute stripped from selinux_enforcing_boot"
+
+
+          # selinux hooks.c puts selinux_enforcing_boot in .bss.rtic via the
+          # __rticdata attribute. arch/arm64/kernel/vmlinux.lds.S only places
+          # KEEP(*(.bss.rtic)) inside a nested .bss block that the enclosing
+          # .bss evicts, so the variable lands outside the +/-1MB ADRP window
+          # and the link dies with:
+          #   relocation truncated to fit: R_AARCH64_ADR_PREL_PG_HI21 against '.bss.rtic'
+          # Dropping the attribute only changes which section the variable sits in.
+          # It is a plain int, exported to no module, so no CRC can move.
+          cd src
+          sed -i 's/static int selinux_enforcing_boot __rticdata;/static int selinux_enforcing_boot;/' security/selinux/hooks.c
+          grep -n 'selinux_enforcing_boot;' security/selinux/hooks.c | head -2
+          ! grep -q '__rticdata' security/selinux/hooks.c
+          echo "rtic attribute stripped from selinux_enforcing_boot"
+
+
       - name: "7. build Image (+ Module.symvers)"
         run: |
           set -euo pipefail
