@@ -1249,11 +1249,54 @@ jobs:
 
           changed=$(wc -l < crc_changed.txt)
           echo "pre-existing symbols with a changed CRC: $changed"
-          if [ "$changed" != "0" ]; then
-            echo "--- changed ---"; cat crc_changed.txt
-            echo "FATAL: $changed pre-existing symbol CRC(s) moved"
+
+          # Known-drift allowlist.
+          # ---------------------
+          # Adding CONFIG_KSU_SUSFS_SUS_KSTAT injects code into fs/stat.c, and
+          # genksyms then emits different type information for that translation
+          # unit. Exactly 9 exported symbols in fs/stat.c move, every run, with
+          # byte-identical values (0x6550ef7e module_layout is NOT among them):
+          #   generic_fillattr, vfs_getattr, vfs_getattr_nosec,
+          #   inode_{add,sub,get,set}_bytes, __inode_{add,sub}_bytes
+          # (4.14 keeps the inode_*_bytes family in fs/stat.c, not fs/inode.c.)
+          #
+          # A .ko is rejected only if it references a symbol whose CRC differs, so
+          # what actually matters is which of these the driver imports. module_layout
+          # is referenced by EVERY module and it is unchanged, so nothing is
+          # rejected on that ground. The list below is the residue.
+          # Anything outside this list is still FATAL - that is the whole point of
+          # keeping the gate.
+          cat > allow.crc <<'ALLOWEOF'
+          __inode_add_bytes
+          __inode_sub_bytes
+          generic_fillattr
+          inode_add_bytes
+          inode_get_bytes
+          inode_set_bytes
+          inode_sub_bytes
+          vfs_getattr
+          vfs_getattr_nosec
+          ALLOWEOF
+          # strip the leading indentation the heredoc picked up
+          sed -i 's/^ *//' allow.crc
+          LC_ALL=C sort -o allow.crc allow.crc
+
+          cut -f1 crc_changed.txt | LC_ALL=C sort > changed_syms.txt
+          comm -23 changed_syms.txt allow.crc > changed_unexpected.txt
+          n_unexpected=$(wc -l < changed_unexpected.txt)
+          n_known=$(comm -12 changed_syms.txt allow.crc | wc -l)
+
+          echo "  of which in the known SUSFS drift list: $n_known"
+          echo "  NOT in the list (must be 0)           : $n_unexpected"
+          if [ "$n_unexpected" != "0" ]; then
+            echo "--- changed but NOT allowlisted ---"
+            cut -f1 crc_changed.txt | while read -r sym; do
+              grep -qxF "$sym" allow.crc || grep -P "^$sym\\t" crc_changed.txt || true
+            done
+            echo "FATAL: $n_unexpected pre-existing symbol CRC(s) moved outside the known list"
             exit 1
           fi
+          echo "CRC verdict: module_layout stable, drift confined to the 9 known fs/stat.c symbols"
 
           echo "new symbols (expected: ksu_/susfs_ only): $(wc -l < added.txt)"
           grep -vE '^(ksu_|susfs_|ksu_susfs|__ksu|ksud)' added.txt > added_unexpected.txt || true
