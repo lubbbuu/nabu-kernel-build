@@ -369,6 +369,39 @@ jobs:
           test "$KR" = "$TARGET_UTS_RELEASE" \
             || { echo "FATAL: kernelrelease '$KR' != '$TARGET_UTS_RELEASE'"; exit 1; }
 
+      - name: "6b. stub for the symbol the OSS drop forgot"
+        run: |
+          set -euo pipefail
+          # input.c:449 calls touch_press_release_events_collect() whenever
+          # CONFIG_LAST_TOUCH_EVENTS=y, and the official IKCONFIG dump DOES set it.
+          # The implementation is NOT in nabu-r-oss: drivers/input/Makefile has no
+          # obj- line for it and no source file defines it, so vmlinux dies at link
+          # with "undefined symbol: touch_press_release_events_collect".
+          # Provide a no-op body. It defines no struct and changes no type, so no
+          # genksyms CRC can move and the config stays byte-identical to official.
+          cd src
+          cat > drivers/input/last_touch_events_stub.c <<'STUBEOF'
+          #include <linux/kernel.h>
+          #include <linux/input.h>
+
+          /*
+           * Body intentionally empty: the vendor's real implementation was never
+           * published. A module's loadability depends on vermagic and symbol CRCs,
+           * not on what this function does at runtime.
+           */
+          void touch_press_release_events_collect(struct input_dev *dev,
+                                                  unsigned int type,
+                                                  unsigned int code,
+                                                  int value)
+          {
+          }
+          STUBEOF
+          grep -q 'last_touch_events_stub' drivers/input/Makefile \
+            || echo 'input-core-y += last_touch_events_stub.o' >> drivers/input/Makefile
+          grep 'last_touch_events_stub' drivers/input/Makefile
+          test -f drivers/input/last_touch_events_stub.c
+          echo "stub installed for touch_press_release_events_collect"
+
       - name: "7. build Image (+ Module.symvers)"
         run: |
           set -euo pipefail
@@ -947,6 +980,39 @@ jobs:
           echo "kernelrelease: $KR"
           test "$KR" = "$TARGET_UTS_RELEASE" \
             || { echo "FATAL: kernelrelease '$KR' != '$TARGET_UTS_RELEASE'"; exit 1; }
+
+      - name: "10b. stub for the symbol the OSS drop forgot"
+        run: |
+          set -euo pipefail
+          # input.c:449 calls touch_press_release_events_collect() whenever
+          # CONFIG_LAST_TOUCH_EVENTS=y, and the official IKCONFIG dump DOES set it.
+          # The implementation is NOT in nabu-r-oss: drivers/input/Makefile has no
+          # obj- line for it and no source file defines it, so vmlinux dies at link
+          # with "undefined symbol: touch_press_release_events_collect".
+          # Provide a no-op body. It defines no struct and changes no type, so no
+          # genksyms CRC can move and the config stays byte-identical to official.
+          cd kernel-source
+          cat > drivers/input/last_touch_events_stub.c <<'STUBEOF'
+          #include <linux/kernel.h>
+          #include <linux/input.h>
+
+          /*
+           * Body intentionally empty: the vendor's real implementation was never
+           * published. A module's loadability depends on vermagic and symbol CRCs,
+           * not on what this function does at runtime.
+           */
+          void touch_press_release_events_collect(struct input_dev *dev,
+                                                  unsigned int type,
+                                                  unsigned int code,
+                                                  int value)
+          {
+          }
+          STUBEOF
+          grep -q 'last_touch_events_stub' drivers/input/Makefile \
+            || echo 'input-core-y += last_touch_events_stub.o' >> drivers/input/Makefile
+          grep 'last_touch_events_stub' drivers/input/Makefile
+          test -f drivers/input/last_touch_events_stub.c
+          echo "stub installed for touch_press_release_events_collect"
 
       - name: "11. build"
         run: |
