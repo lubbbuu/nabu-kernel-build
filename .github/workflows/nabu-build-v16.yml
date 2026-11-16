@@ -1350,7 +1350,7 @@ jobs:
           # Same v0.2 structure note as the baseline pack step: the boot section
           # carries patch_vbmeta_flag=auto, which ak3-core.sh treats as unset.
           sed -i "s|kernel.string=.*|kernel.string=nabu v16 stage ${STAGE} (official 4.14.180)|" ak3/anykernel.sh
-          grep -q "kernel.string=nabu stage ${STAGE}" ak3/anykernel.sh \
+          grep -q "kernel.string=nabu v16 stage ${STAGE}" ak3/anykernel.sh \
             || { echo "FATAL: kernel.string not rewritten for stage ${STAGE}"; exit 1; }
           N_VBMETA=$(grep -c 'patch_vbmeta_flag=auto' ak3/anykernel.sh)
           [ "$N_VBMETA" = "2" ] \
